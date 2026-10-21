@@ -41,8 +41,8 @@ class Tarea(models.Model):
     completa = models.BooleanField(default=False)
     sprint = models.ForeignKey(Sprint, on_delete=models.CASCADE,null=True,blank=True)
     programador = models.ForeignKey(Programador, on_delete=models.CASCADE,null=True,blank=True)
-    etiquetas = models.ManyToManyField(Etiqueta)
+    etiquetas = models.ManyToManyField(Etiqueta,null=True,blank=True)
 
     def __str__(self):
-        return f"{self.id} {self.nombre}"
+        return f"[{self.nombre}]" + ", ".join([e.nombre for e in self.etiquetas.all()])
 
