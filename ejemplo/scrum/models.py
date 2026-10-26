@@ -44,5 +44,5 @@ class Tarea(models.Model):
     etiquetas = models.ManyToManyField(Etiqueta,null=True,blank=True)
 
     def __str__(self):
-        return f"[{self.nombre}]" + ", ".join([e.nombre for e in self.etiquetas.all()])
+        return f"[{self.id} {self.nombre}]" + ", ".join([e.nombre for e in self.etiquetas.all()])
 

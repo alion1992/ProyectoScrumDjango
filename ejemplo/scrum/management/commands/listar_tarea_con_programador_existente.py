@@ -1,5 +1,8 @@
 from django.core.management import BaseCommand
 from ...models import Tarea,Programador
+
+
+
 class Command(BaseCommand):
     help = ""
 
