@@ -81,22 +81,42 @@ def crear_tarea(request):
     )
 
     # SI EN LA TAREA VIENEN ETIQUETAS Y ESAS ETIQUETAS NO EXISTEN, QUIERO QUE LA GUARDES
-
+    etiquetas = tarea_json.get("etiquetas", [])
+    crear_etiquetas(etiquetas,tarea)
 
     return JsonResponse({'exito': 'Se ha creado correctamente la tarea',
                          'tarea': tarea.id})
 
 
+@csrf_exempt
+def crear_programador(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Tipo de petición no es correcta'},status=405)
+    try:
+        programador_json = json.loads(request.body)
+    except JSONDecodeError as e:
+        return JsonResponse({'error': 'El Json no esta bien formado'},status=400)
+
+    programador = Programador.objects.create(
+        nombre = programador_json.get("nombre"),
+        apellido1 = programador_json.get("apellido1")
+    )
+    etiquetas = programador_json.get("etiquetas", [])
+    crear_etiquetas(etiquetas, programador)
+
+    return JsonResponse({'exito': 'Se ha creado correctamente el programador',
+                         'tarea': programador.id})
 
 
+def crear_etiquetas(etiquetas,objeto):
 
-
-
-
-
-
-
-
+        for etiqueta in etiquetas:
+            etiquita_model, creada = Etiqueta.objects.get_or_create(nombre=etiqueta)
+            objeto.etiquetas.add(etiquita_model)
+            if not creada:
+                print("Se ha creada la etiqueta")
+            else:
+                print("Etiqueta Nueva")
 
 
 
