@@ -118,9 +118,6 @@ def crear_etiquetas(etiquetas,objeto):
             else:
                 print("Etiqueta Nueva")
 
-
-
-
 '''
 @csrf_exempt
 def crear_tarea(request):
